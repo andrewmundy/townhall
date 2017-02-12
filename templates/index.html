@@ -1,5 +1,7 @@
 {% extends "base.html" %} 
 {% block content %}
-<button>Representative</button>
-<button>Constituant</button>
+<h1>Speak Now</h1>
+<form action="{{url_for('representatives')}}"></form>
+<input type="submit" value="Participant"></input>
+<input type="submit" value="Representative"></input>
 {% endblock %}
