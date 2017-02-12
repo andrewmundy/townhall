@@ -13,11 +13,12 @@ function showform(a)
     }
 }
 </script>
-
-<h1>Speak Now</h1>
+<div>
+	<div class="buttons">
 	<h3>I am a...</h3>
-	<button onclick="showform(1)">Participant</button>
-	<button onclick="showform(2)">Representative</button>
+	<button class="btn btn-lg btn-warning" onclick="showform(1)">Participant</button>
+	<button  class="btn btn-lg btn-warning"onclick="showform(2)">Representative</button>
+	</div>
 	<br/>
 
 	<form id="participantform" action="{{url_for('participant')}}" method="GET" style="display:none;">
@@ -26,7 +27,6 @@ function showform(a)
 	</input>
 	<input type="submit" value="Submit">
 </form>
-
 	<form id="representativeform" action="{{url_for('representative')}}" style="display:none;">
 	<label for="First Name:">First Name:</label>
 	<input type="text" name="first">
@@ -38,5 +38,34 @@ function showform(a)
 	<input type="text" name="city">
 	</input>
 	<input type="submit" value="Submit">
-</form>
+  </form>
+ </div>
+</header>
+<div class="container">
+        <hr class="featurette-divider">
+        <div class="featurette" id="about">
+            <img class="featurette-image img-circle img-responsive pull-right" width="304" src="https://image.ibb.co/guT5BF/sanders_teaser_2_copy.png">
+            <h2 class="featurette-heading">Communicating with my followers<br>
+                <span class="text-muted"><h3><i>its now a breeze</i></h3></span>
+            </h2>
+            <p class="lead">Thanks to Speaknow I'm able to field questions and speak directly to the people who want to hear from me first. I fully endorse Speaknow and in no way was I paid to write this. Mostly because I didnt.</p>
+        </div>
+        <hr class="featurette-divider">
+        <div class="featurette" id="services">
+            <img class="featurette-image img-circle img-responsive pull-left" src="http://placehold.it/500x500">
+            <h2 class="featurette-heading">The Second Heading
+                <span class="text-muted">Is Pretty Cool Too.</span>
+            </h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        </div>
+        <hr class="featurette-divider">
+        <div class="featurette" id="contact">
+            <img class="featurette-image img-circle img-responsive pull-right" src="http://placehold.it/500x500">
+            <h2 class="featurette-heading">The Third Heading
+                <span class="text-muted">Will Seal the Deal.</span>
+            </h2>
+            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        </div>
+        <hr class="featurette-divider">
+    </div>
 {% endblock %}
