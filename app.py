@@ -7,8 +7,8 @@ app = Flask(__name__)
 
 #pubnub setup
 pnconfig = PNConfiguration()
-pnconfig.subscribe_key = "sub-c-7d26f194-f129-11e6-acae-0619f8945a4f"
-pnconfig.publish_key = "pub-c-3c89c35e-30fc-448f-9978-561ad8285b40"
+pnconfig.subscribe_key = "sub-c-60f7ba52-f143-11e6-acae-0619f8945a4f"
+pnconfig.publish_key = "pub-c-95a29543-8644-4b0f-86e2-0eb289ff3652"
 pnconfig.ssl = True
  
 pubnub = PubNub(pnconfig)
