@@ -1,8 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-{% str([packet.entry for packet in envelope.messages]) %}
 
-{% for packet in envelope.messages %}
+<h1>Welcome to your Town Hall,
+{{townhall.representative.firstname}} {{townhall.representative.lastname}}<br>
+</h1>
+<h3>
+Titled: 
+{{townhall.description}} <br>
+</h3>
+At:
+{{townhall.date}} <br>
+
+{% for question in questions %}
+By: {{question[1]}} {{question[2]}} <br>
+{{question[0]}}
+{% endfor %}
 
 
 {% endblock %}

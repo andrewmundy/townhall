@@ -15,7 +15,7 @@ pubnub = PubNub(pnconfig)
 
 #object to store on pubnub
 Representative = namedtuple("Representative", "firstname, lastname, city")
-Townhall = namedtuple("Townhall", "description, date, representative")
+Townhall = namedtuple("Townhall", "description, date, representative, link")
 Question = namedtuple("Question", "text, firstname, lastname, address")
 
 @app.route('/')
@@ -37,10 +37,11 @@ def representative():
 def links(lastname):
 	if request.method == 'POST':
 		rep = Representative(request.form['first'], request.form['last'], request.form['city'])
-		townhall = Townhall(request.form['desc'], request.form['date'], rep)
+		townhall = Townhall(request.form['desc'], request.form['date'], rep, request.form['link'])
 
 		lastname = request.form['last'].lower()
 		city = request.form['city'].lower()
+
 
 		def check(result, status):
 			if status.error:
@@ -65,8 +66,7 @@ def dashboard(lastname):
 	questions = []
 	townhall = eval(stuff[0])
 	for s in stuff[1::]:
-		eval(s)
-		questions.append([s.text, s.firstname, s.lastname, s.address])
+		questions.append([eval(s).text, eval(s).firstname, eval(s).lastname, eval(s).address])
 		print(questions)
 		
 	return render_template('dash.html', envelope=envelope, townhall=townhall, questions=questions)
