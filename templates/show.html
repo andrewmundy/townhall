@@ -3,6 +3,7 @@
 
 <h1>Mr. {{last}}'s Town Hall</h1>
 <h3>Townhall starts at {{date}}</h3>
+<h2>And will be hosted at: </h2>{{link}}
 <form action="{{url_for('townhall', lastname=last)}}" method="POST">
 	<label for="Your Question:">Your Question:</label>
 	<input type="text" name="question">

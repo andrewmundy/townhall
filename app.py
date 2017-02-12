@@ -101,7 +101,7 @@ def townhall(lastname):
 			if not messages:
 				return "Your rep hasn't set up a townhall. Tell them you are interested in them holding a SpeakNow Townhall!"
 			townhall = eval(messages[0].entry)
-			return render_template('show.html', date=townhall.date, last=lastname, submitted='submitted' in request.args)
+			return render_template('show.html', date=townhall.date, last=lastname, link = townhall.link, submitted='submitted' in request.args)
 	else:
 		# create question
 		question = Question(request.form['question'], request.form['first'], request.form['last'], request.form['address'])
