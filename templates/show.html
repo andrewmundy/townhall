@@ -1,23 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
 </header>
-<h1>Mr. {{last}}'s Town Hall</h1>
+<div class="text-center">
+<p></p>
+<h1>{{first}}{{last}}'s Town Hall</h1>
 <h3>Townhall starts at {{date}}</h3>
 <h2>And will be hosted at: </h2>{{link}}
-<form action="{{url_for('townhall', lastname=last)}}" method="POST">
-	<label for="Your Question:">Your Question:</label>
-	<input type="text" name="question">
+<div class="container-fluid">
+<form  class="form-group white" action="{{url_for('townhall', lastname=last)}}" method="POST">
+	<label  class="form-text text-muted" for="Your Question:"></label>
+	<input class="form-control" placeholder="Question" type="text" name="question">
 
-	<label for="First Name:">First Name:</label>
-	<input type="text" name="first">
-	<label for="Last Name:">Last Name:</label>
-	<input type="text" name="last">
-	<label for="Address:">Address:</label>
-	<input type="text" name="address">
+	<label  class="form-text text-muted"for=" First Name:"></label>
+	<input class="form-control" placeholder="First Name" type="text" name="first">
 
-	<input type="submit" value="Submit">
+	<label class="form-text text-muted" for="Last Name:"></label>
+	<input class="form-control" placeholder="Last Name" type="text" name="last">
+
+	<label class="form-text text-muted" for="Address:"></label>
+	<input class="form-control" placeholder="Address" type="text" name="address">
+	<p></p>
+	<input type="submit"  class="btn" value="Submit">
 </form>
+</div>
 {% if submitted %}
 <h2>Thank's for your submission!</h2>
+</div>
 {% endif %}
 {% endblock %}

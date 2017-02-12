@@ -1,18 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Welcome, {{first}} {{last}}</h1>
-	<label for="Make a Town Hall:">Schedule a Town Hall in {{city}}:</label>
+<h1 class="white" >Welcome, {{first}} {{last}}</h1>
+	<label class="form-group white" for="Make a Town Hall:">Schedule a Town Hall in {{city}}:</label>
+	
 	<form action="{{url_for('links', lastname=last.lower())}}" method="POST">
-	<label for="Description:">Description:</label>
-	<input type="text" name="desc"> <br>
-	<label for="Date:">Date:</label>
-	<input type="datetime-local" name="date"> <br>
-	<label for="Stream Link:">Stream Link:</label>
-	<input type="text" name="link"> <br>
+	<label class="form-text text-muted" for="Description:"></label>
+
+	<input class="form-control" placeholder="Description" type="text" name="desc"> <br>
+	<label class="form-text text-muted" for="Date:"></label>
+
+	<input class="form-control" placeholder="Date" type="datetime-local" name="date"> <br>
+	<label class="form-text text-muted" for="Stream Link:"></label>
+
+	<input class="form-control" placeholder="Stream Link" type="text" name="link"> <br>
 	</input>
+
 	<input type="hidden" name="city" value="{{city}}">
 	<input type="hidden" name="first" value="{{first}}">
 	<input type="hidden" name="last" value="{{last}}">
-	<input type="submit" value="Submit">
+	<input type="submit" class="btn" value="Submit">
+	<p></p>
 </form>	
 {% endblock %}
