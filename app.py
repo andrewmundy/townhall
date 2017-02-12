@@ -1,6 +1,22 @@
 from flask import Flask, render_template, url_for, redirect, request, flash
+from collections import namedtuple
+from pubnub.pnconfiguration import PNConfiguration
+from pubnub.pubnub import PubNub
 
 app = Flask(__name__)
+
+#pubnub setup
+pnconfig = PNConfiguration()
+pnconfig.subscribe_key = "sub-c-7d26f194-f129-11e6-acae-0619f8945a4f"
+pnconfig.publish_key = "pub-c-3c89c35e-30fc-448f-9978-561ad8285b40"
+pnconfig.ssl = True
+ 
+pubnub = PubNub(pnconfig)
+
+#object to store on pubnub
+Representative = namedtuple("Representative", "firstname, lastname, city")
+Townhall = namedtuple("Townhall", "description, date, representative")
+Question = namedtuple("Question", "text, name, address")
 
 @app.route('/')
 def root():
@@ -10,23 +26,76 @@ def root():
 def index():
 	return render_template('index.html')
 
-@app.route('/representative', methods=["GET", "POST"])
+@app.route('/representative')
 def representative():
+	if not all(key in request.args for key in ['first', 'last', 'city']):
+		return redirect(url_for('index'))
+	return render_template('rep.html', first=request.args['first'], last=request.args['last'], city=request.args['city'])
 
-	print("representation page")
-	if request.method == "POST":
-		return render_template('rep.html', first=request.form['first'], last=request.form['last'], city=request.form['city'])
 
-	else:
-		pass
+@app.route('/representative/<lastname>/links', methods=['GET', 'POST'])
+def links(lastname):
+	if request.method == 'POST':
+		rep = Representative(request.form['first'], request.form['last'], request.form['city'])
+		townhall = Townhall(request.form['desc'], request.form['date'], rep)
 
-@app.route('/participant', methods=["POST"])
+		lastname = request.form['last'].lower()
+		city = request.form['city'].lower()
+
+		def check(result, status):
+			if status.isError:
+				raise Exception("PubNub Publishing Failed")
+
+		# send lastname to the City:sf channel
+		pubnub.publish().channel('City:' + city).message(lastname)\
+        .should_store(True).use_post(True).async(check)
+
+		# send str(townhall) to the Name:feinstein channel
+		pubnub.publish().channel('Name:' + lastname).message(str(townhall))\
+        .should_store(True).use_post(True).async(check)
+
+	return render_template('links.html', last=lastname)
+
+@app.route('/representative/<lastname>')
+def dashboard(lastname):
+	# get all things pushed to Name:feinstein
+	envelope = pubnub.history().channel('Name:' + lastname).reverse(True).sync()
+	return str(envelope.result.messages)
+	# TODO
+
+
+@app.route('/participant')
 def participant():
-	print("participation page")
+	if city not in request.args:
+		return redirect(url_for('index'))
+	try:
+		city = request.args['city']
+
+		# get the first thing pushed to the City:sf channel (the lastname of the representative)
+		envelope = pubnub.history().channel('City:' + city.lower()).reverse(True).count(1).sync()
+		messages = envelope.result.messages
+		if not messages:
+			return "Your rep hasn't set up a townhall in your city. Tell them you are interested in them holding a SpeakNow Townhall!"
+		lastname = messages[0].entry
+	except Exception as e:
+		return "PubNub Error:{}".format(e)
+	return redirect(url_for('townhall', lastname=lastname))
+
 
 @app.route('/<lastname>')
-def rep():
-	pass
+def townhall(lastname, methods=['GET', 'POST']):
+	if request.method == 'GET':
+		# get the 
+		envelope = pubnub.history().channel('Name:' + lastname).reverse(True).count(1).sync()
+		messages = envelope.result.messages
+		if not messages:
+			return "Your rep hasn't set up a townhall. Tell them you are interested in them holding a SpeakNow Townhall!"
+		townhall = eval(messages[0].entry)
+		return render_template('show.html', date=townhall.date)
+	else:
+		# TODO
+		# take questions and put it on the Name:feinstein channel
+
 
     
 if __name__ == "__main__":

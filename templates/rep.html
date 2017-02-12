@@ -1,7 +1,15 @@
-{% extends base.html %}
-{$ block content %}
-<h1>Welcome, {{first}}, {{last}}</h1>
-<form action="{{url_for('/<lastname>')}}"></form>
-<label for="Make a Town Hall:">Make a Town Hall:</label>
-<button type="submit" value="GO">
-{% endblock}
+{% extends "base.html" %}
+{% block content %}
+<h1>Welcome, {{first}} {{last}}</h1>
+	<label for="Make a Town Hall:">Schedule a Town Hall in {{city}}:</label>
+	<form action="{{url_for('links', lastname=last.lower())}}" method="POST">
+	<label for="Decription:">Description:</label>
+	<input type="text" name=desc>
+	<input type="datetime-local" name="date">
+	</input>
+	<input type="hidden" name="city" value="{{city}}">
+	<input type="hidden" name="first" value="{{first}}">
+	<input type="hidden" name="last" value="{{last}}">
+	<input type="submit" value="Submit">
+</form>	
+{% endblock %}

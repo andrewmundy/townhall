@@ -1,7 +1,33 @@
 {% extends "base.html" %} 
 {% block content %}
+<script>
+function showform(a)
+{
+    if(a==1) {
+    	document.getElementById("participantform").style.display="block";
+    	document.getElementById("representativeform").style.display="none";
+    }
+    else {
+    	document.getElementById("representativeform").style.display="block";
+    	document.getElementById("participantform").style.display="none";
+    }
+}
+</script>
+
 <h1>Speak Now</h1>
-<form action="{{url_for('representative')}}" method="POST">
+	<h3>I am a...</h3>
+	<button onclick="showform(1)">Participant</button>
+	<button onclick="showform(2)">Representative</button>
+	<br/>
+
+	<form id="participantform" action="{{url_for('participant')}}" method="GET" style="display:none;">
+	<label for="City:">City:</label>
+	<input type="text" name="city">
+	</input>
+	<input type="submit" value="Submit">
+</form>
+
+	<form id="representativeform" action="{{url_for('representative')}}" style="display:none;">
 	<label for="First Name:">First Name:</label>
 	<input type="text" name="first">
 	</input>
@@ -11,11 +37,6 @@
 	<label for="City:">City:</label>
 	<input type="text" name="city">
 	</input>
-	<br>
-	<span>
-		<input type="submit" value="Participant" formaction="{{url_for('participant')}}" method="POST">
-		<input type="submit" value="Representative"></input>
-	</span>
-
+	<input type="submit" value="Submit">
 </form>
 {% endblock %}

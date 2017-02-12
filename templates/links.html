@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>We have successfully set up a town hall for you.</h1>
+Please share the following link with your constituents:<br>
+<code>{{url_for('townhall', lastname=last, _external=True)}}</code>
+<br>
+And your townhall begins, access the following link to see the questions that your constituents have for you.<br>
+<code>{{url_for('dashboard', lastname=last, _external=True)}}</code>
+{% endblock %}
