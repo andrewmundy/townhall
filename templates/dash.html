@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+{% str([packet.entry for packet in envelope.messages]) %}
+
+{% for packet in envelope.messages %}
+
+
+{% endblock %}
