@@ -1,0 +1,7 @@
+{% extends base.html %}
+{$ block content %}
+<h1>Welcome, {{first}}, {{last}}</h1>
+<form action="{{url_for('/<lastname>')}}"></form>
+<label for="Make a Town Hall:">Make a Town Hall:</label>
+<button type="submit" value="GO">
+{% endblock}
