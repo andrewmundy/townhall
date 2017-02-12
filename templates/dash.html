@@ -3,8 +3,8 @@
 <script>
 function showform(question)
 {
-    document.getElementById("answerform").style.display=block
-    document.getElementByID("questiondata").value=question
+    document.getElementById("answerform").style.display="block";
+    document.getElementById("questiondata").value=question
 }
 </script>
 
@@ -21,7 +21,7 @@ At:
 {% for question in questions %}
 By: {{question[1]}} {{question[2]}} <br>
 {{question[0]}}
-<button onclick="showform('{{question}}')">Answer this Question</button>
+<button onclick="showform({{question}})">Answer this Question</button>
 {% endfor %}
 
 	<form id="answerform" method="GET" style="display:none;">
