@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
+<script>
+function showform(question)
+{
+    document.getElementById("answerform").style.display=block
+    document.getElementByID("questiondata").value=question
+}
+</script>
 
 <h1>Welcome to your Town Hall,
 {{townhall.representative.firstname}} {{townhall.representative.lastname}}<br>
@@ -14,7 +21,14 @@ At:
 {% for question in questions %}
 By: {{question[1]}} {{question[2]}} <br>
 {{question[0]}}
+<button onclick="showform('{{question}}')">Answer this Question</button>
 {% endfor %}
 
+	<form id="answerform" method="GET" style="display:none;">
+	<label for="Your response:">Your response:</label>
+	<input type="text" name="answer">
+	<input id="questiondata" type="hidden" name="questiondata" value="None">
+	<input type="submit" value="Submit">
+</form>
 
 {% endblock %}
